@@ -100,8 +100,8 @@ supervisor:
 .align 4
 page_fault_handler:
     # Save execution context to physical memory
-    # Machine mode operates in physical memory, thus we can directly access save_trap
-    la t0, save_trap
+    # Machine mode operates in physical memory, thus we can directly access trap_save
+    la t0, trap_save
     sd t1, 0(t0)
     sd t2, 8(t0)
     sd t3, 16(t0)
@@ -178,7 +178,7 @@ valid_l1:
     add t5, t4, t5         # Address of L0 Leaf page table entry slot
 
     # Branch logic based on Fault Type
-    csrr t1, mcause
+    csrr t1, mcauseclear
     li t2, 12
     beq t1, t2, inst_page_mapping
 
@@ -225,7 +225,7 @@ done_handler:
     sfence.vma zero, zero
 
     # Restore context
-    la t0, save_trap
+    la t0, trap_save
     ld t1, 0(t0)
     ld t2, 8(t0)
     ld t3, 16(t0)
@@ -273,4 +273,4 @@ satp_config: .dword 0x8000000000081000
 
 .align 8
 next_free_page: .dword 0x80003000   # Tracks the next available 4KB physical page
-save_trap:      .zero 128           # Pre-allocated physical memory to save registers safely
+trap_save:      .zero 128           # Pre-allocated physical memory to save registers safely
