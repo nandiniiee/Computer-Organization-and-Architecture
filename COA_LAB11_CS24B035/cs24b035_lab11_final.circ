@@ -3,6 +3,10 @@
   This file is intended to be loaded by Logisim-evolution v4.1.0(https://github.com/logisim-evolution/).
 
   <lib desc="#Wiring" name="0">
+    <tool name="Splitter">
+      <a name="fanout" val="3"/>
+      <a name="incoming" val="3"/>
+    </tool>
     <tool name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="south"/>
@@ -3580,7 +3584,7 @@
     </comp>
     <comp loc="(1620,750)" name="idecoder"/>
     <comp loc="(2600,730)" name="regfile32x32"/>
-    <comp loc="(800,210)" name="BHT"/>
+    <comp loc="(800,210)" name="branch_history_table"/>
     <wire from="(1000,1570)" to="(1000,1600)"/>
     <wire from="(1000,1570)" to="(1870,1570)"/>
     <wire from="(1000,1650)" to="(1000,1680)"/>
@@ -9288,9 +9292,6 @@
       <a name="fanout" val="9"/>
       <a name="incoming" val="9"/>
     </comp>
-    <comp lib="1" loc="(1020,1130)" name="OR Gate">
-      <a name="size" val="30"/>
-    </comp>
     <comp lib="1" loc="(1300,1440)" name="OR Gate">
       <a name="facing" val="south"/>
       <a name="inputs" val="3"/>
@@ -9344,7 +9345,6 @@
       <a name="facing" val="north"/>
       <a name="size" val="20"/>
     </comp>
-    <comp lib="1" loc="(970,1120)" name="NOT Gate"/>
     <comp lib="2" loc="(710,930)" name="Decoder">
       <a name="select" val="3"/>
     </comp>
@@ -9384,10 +9384,8 @@
     <comp lib="9" loc="(1225,900)" name="Text">
       <a name="text" val="i_type_jalr"/>
     </comp>
-    <wire from="(1000,1160)" to="(1000,1190)"/>
     <wire from="(1000,1190)" to="(1000,2350)"/>
     <wire from="(1000,2350)" to="(1920,2350)"/>
-    <wire from="(1020,1130)" to="(1030,1130)"/>
     <wire from="(1030,1090)" to="(1030,1100)"/>
     <wire from="(1030,670)" to="(1030,860)"/>
     <wire from="(1030,670)" to="(1410,670)"/>
@@ -9549,9 +9547,6 @@
     <wire from="(920,1250)" to="(920,1390)"/>
     <wire from="(920,620)" to="(920,630)"/>
     <wire from="(920,630)" to="(940,630)"/>
-    <wire from="(940,1140)" to="(940,1160)"/>
-    <wire from="(940,1140)" to="(990,1140)"/>
-    <wire from="(940,1160)" to="(1000,1160)"/>
     <wire from="(940,600)" to="(2090,600)"/>
     <wire from="(940,600)" to="(940,630)"/>
     <wire from="(940,630)" to="(950,630)"/>
@@ -9560,7 +9555,6 @@
     <wire from="(960,1090)" to="(1030,1090)"/>
     <wire from="(960,1190)" to="(1000,1190)"/>
     <wire from="(960,710)" to="(960,1090)"/>
-    <wire from="(970,1120)" to="(990,1120)"/>
     <wire from="(970,620)" to="(1800,620)"/>
     <wire from="(970,630)" to="(1790,630)"/>
     <wire from="(970,640)" to="(1780,640)"/>
@@ -16171,9 +16165,9 @@
     <wire from="(800,670)" to="(820,670)"/>
     <wire from="(850,680)" to="(880,680)"/>
   </circuit>
-  <circuit name="BHT">
+  <circuit name="branch_history_table">
     <a name="appearance" val="logisim_evolution"/>
-    <a name="circuit" val="BHT"/>
+    <a name="circuit" val="branch_history_table"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="1.0"/>
     <comp lib="0" loc="(1340,420)" name="Pin">
@@ -16218,7 +16212,7 @@
       <a name="dataWidth" val="2"/>
       <a name="trigger" val="falling"/>
     </comp>
-    <comp loc="(710,500)" name="main"/>
+    <comp loc="(710,500)" name="saturating_counter"/>
     <wire from="(1230,420)" to="(1230,440)"/>
     <wire from="(1230,420)" to="(1340,420)"/>
     <wire from="(330,630)" to="(350,630)"/>
@@ -16245,9 +16239,9 @@
     <wire from="(970,440)" to="(970,490)"/>
     <wire from="(970,440)" to="(990,440)"/>
   </circuit>
-  <circuit name="main">
+  <circuit name="saturating_counter">
     <a name="appearance" val="logisim_evolution"/>
-    <a name="circuit" val="main"/>
+    <a name="circuit" val="saturating_counter"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="1.0"/>
     <comp lib="0" loc="(110,280)" name="Pin">
