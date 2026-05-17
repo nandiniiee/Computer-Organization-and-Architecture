@@ -1,6 +1,0 @@
-ENTRY(main)
-
-SECTIONS
-{
-	. = 0xA3000000;
-}

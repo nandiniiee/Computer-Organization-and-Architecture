@@ -1,0 +1,147 @@
+
+a.out:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000080000000 <mtrap_handler>:
+    80000000:	7139                	addi	sp,sp,-64
+    80000002:	e016                	sd	t0,0(sp)
+    80000004:	e41a                	sd	t1,8(sp)
+    80000006:	e81e                	sd	t2,16(sp)
+    80000008:	ec72                	sd	t3,24(sp)
+    8000000a:	f076                	sd	t4,32(sp)
+    8000000c:	f47a                	sd	t5,40(sp)
+    8000000e:	f87e                	sd	t6,48(sp)
+    80000010:	fc2a                	sd	a0,56(sp)
+    80000012:	342022f3          	csrr	t0,mcause
+    80000016:	34102373          	csrr	t1,mepc
+    8000001a:	343023f3          	csrr	t2,mtval
+    8000001e:	4e09                	li	t3,2
+    80000020:	07c28263          	beq	t0,t3,80000084 <Illegal_Instructions>
+    80000024:	4e0d                	li	t3,3
+    80000026:	05c28663          	beq	t0,t3,80000072 <Breakpoint>
+    8000002a:	4e11                	li	t3,4
+    8000002c:	07c28463          	beq	t0,t3,80000094 <Misaligned_Loads>
+    80000030:	4e15                	li	t3,5
+    80000032:	07c28963          	beq	t0,t3,800000a4 <Access_Faults>
+    80000036:	4e21                	li	t3,8
+    80000038:	03c28463          	beq	t0,t3,80000060 <Ecall>
+    8000003c:	a8a5                	j	800000b4 <restore>
+
+000000008000003e <ucode>:
+    8000003e:	0000                	unimp
+    80000040:	0000                	unimp
+    80000042:	9002                	ebreak
+    80000044:	007a12b7          	lui	t0,0x7a1
+    80000048:	2032829b          	addiw	t0,t0,515
+    8000004c:	0002b283          	ld	t0,0(t0) # 7a1000 <mtrap_handler-0x7f85f000>
+    80000050:	4281                	li	t0,0
+    80000052:	0002b303          	ld	t1,0(t0)
+    80000056:	00000073          	ecall
+    8000005a:	4e01                	li	t3,0
+    8000005c:	000e0e13          	mv	t3,t3
+
+0000000080000060 <Ecall>:
+    80000060:	6541                	lui	a0,0x10
+    80000062:	eed5051b          	addiw	a0,a0,-275
+    80000066:	34102ef3          	csrr	t4,mepc
+    8000006a:	0e91                	addi	t4,t4,4
+    8000006c:	341e9073          	csrw	mepc,t4
+    80000070:	a091                	j	800000b4 <restore>
+
+0000000080000072 <Breakpoint>:
+    80000072:	6531                	lui	a0,0xc
+    80000074:	eef5051b          	addiw	a0,a0,-273
+    80000078:	34102ef3          	csrr	t4,mepc
+    8000007c:	0e91                	addi	t4,t4,4
+    8000007e:	341e9073          	csrw	mepc,t4
+    80000082:	a80d                	j	800000b4 <restore>
+
+0000000080000084 <Illegal_Instructions>:
+    80000084:	34302cf3          	csrr	s9,mtval
+    80000088:	34102ef3          	csrr	t4,mepc
+    8000008c:	0e91                	addi	t4,t4,4
+    8000008e:	341e9073          	csrw	mepc,t4
+    80000092:	a00d                	j	800000b4 <restore>
+
+0000000080000094 <Misaligned_Loads>:
+    80000094:	34302d73          	csrr	s10,mtval
+    80000098:	34102ef3          	csrr	t4,mepc
+    8000009c:	0e91                	addi	t4,t4,4
+    8000009e:	341e9073          	csrw	mepc,t4
+    800000a2:	a809                	j	800000b4 <restore>
+
+00000000800000a4 <Access_Faults>:
+    800000a4:	34302df3          	csrr	s11,mtval
+    800000a8:	34102ef3          	csrr	t4,mepc
+    800000ac:	0e91                	addi	t4,t4,4
+    800000ae:	341e9073          	csrw	mepc,t4
+    800000b2:	a009                	j	800000b4 <restore>
+
+00000000800000b4 <restore>:
+    800000b4:	6282                	ld	t0,0(sp)
+    800000b6:	6322                	ld	t1,8(sp)
+    800000b8:	63c2                	ld	t2,16(sp)
+    800000ba:	6e62                	ld	t3,24(sp)
+    800000bc:	7e82                	ld	t4,32(sp)
+    800000be:	7f22                	ld	t5,40(sp)
+    800000c0:	7fc2                	ld	t6,48(sp)
+    800000c2:	7562                	ld	a0,56(sp)
+    800000c4:	6121                	addi	sp,sp,64
+    800000c6:	30200073          	mret
+    800000ca:	0000                	unimp
+    800000cc:	0000                	unimp
+	...
+
+Disassembly of section .text.init:
+
+00000000800000d0 <_start>:
+    800000d0:	00010297          	auipc	t0,0x10
+    800000d4:	f3028293          	addi	t0,t0,-208 # 80010000 <_stack_low>
+    800000d8:	8116                	mv	sp,t0
+    800000da:	00000297          	auipc	t0,0x0
+    800000de:	f2628293          	addi	t0,t0,-218 # 80000000 <mtrap_handler>
+    800000e2:	30529073          	csrw	mtvec,t0
+    800000e6:	00000297          	auipc	t0,0x0
+    800000ea:	f5828293          	addi	t0,t0,-168 # 8000003e <ucode>
+    800000ee:	34129073          	csrw	mepc,t0
+    800000f2:	30002373          	csrr	t1,mstatus
+    800000f6:	6389                	lui	t2,0x2
+    800000f8:	8003839b          	addiw	t2,t2,-2048
+    800000fc:	fff3c393          	not	t2,t2
+    80000100:	00737333          	and	t1,t1,t2
+    80000104:	30031073          	csrw	mstatus,t1
+    80000108:	30200073          	mret
+
+Disassembly of section .bss:
+
+0000000080010000 <_stack_low>:
+	...
+
+Disassembly of section .riscv.attributes:
+
+0000000000000000 <.riscv.attributes>:
+   0:	3641                	addiw	a2,a2,-16
+   2:	0000                	unimp
+   4:	7200                	ld	s0,32(a2)
+   6:	7369                	lui	t1,0xffffa
+   8:	01007663          	bgeu	zero,a6,14 <mtrap_handler-0x7fffffec>
+   c:	002c                	addi	a1,sp,8
+   e:	0000                	unimp
+  10:	7205                	lui	tp,0xfffe1
+  12:	3676                	fld	fa2,376(sp)
+  14:	6934                	ld	a3,80(a0)
+  16:	7032                	0x7032
+  18:	5f30                	lw	a2,120(a4)
+  1a:	326d                	addiw	tp,tp,-5
+  1c:	3070                	fld	fa2,224(s0)
+  1e:	615f 7032 5f30      	0x5f307032615f
+  24:	3266                	fld	ft4,120(sp)
+  26:	3070                	fld	fa2,224(s0)
+  28:	645f 7032 5f30      	0x5f307032645f
+  2e:	30703263          	0x30703263
+  32:	0800                	addi	s0,sp,16
+  34:	0a01                	addi	s4,s4,0
+  36:	0b              	Address 0x0000000000000036 is out of bounds.
+
